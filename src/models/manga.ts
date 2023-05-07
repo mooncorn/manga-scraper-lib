@@ -8,6 +8,7 @@ export default class MangaModel {
   public status?: string;
 
   public chapters?: ChapterModel[];
+  public latestChapter?: string; // number of latest chapter
 
   public source?: string;
   public url?: string;
