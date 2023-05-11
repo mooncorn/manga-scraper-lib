@@ -1,2 +1,3 @@
-# manga-scraper-lib
- 
+# Unified Manga Reader
+
+Read all your manga in one place

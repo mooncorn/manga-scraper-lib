@@ -11,10 +11,4 @@ puppeteer.launch({ headless: "new" }).then(async (browser) => {
     kissmanga: new KissmangaScraper(browser),
     mangakakalot: new MangakakalotScraper(browser),
   };
-
-  // const manga = await sources.mangakakalot.getManga(
-  //   "https://manganato.com/manga-sq996251"
-  // );
-
-  console.log(await sources.mangakakalot.search("martial"));
 });
