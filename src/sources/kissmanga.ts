@@ -8,12 +8,11 @@ export default class KissmangaScraper extends MangaScraper {
   protected searchUrl: string = "https://kissmanga.in/?post_type=wp-manga&s=";
   protected baseUrl: string = "https://kissmanga.in";
   protected mangaUrl: string = "/kissmanga";
-  protected mangaListUrl: string = "/mangalist";
   public readonly name: string = "Kissmanga";
   protected selectorToWait: string = "body > div.wrap > div > div";
 
   protected async extractTitle(): Promise<string> {
-    return this.page!.$eval(
+    return await this.page!.$eval(
       "body > div.wrap > div > div > div > div.profile-manga.summary-layout-1 > div > div > div > div.post-title > h1",
       (e) => e.innerText
     )
@@ -22,7 +21,7 @@ export default class KissmangaScraper extends MangaScraper {
   }
 
   protected async extractImgUrl(): Promise<string> {
-    return this.page!.$eval(
+    return await this.page!.$eval(
       "body > div.wrap > div > div > div > div.profile-manga.summary-layout-1 > div > div > div > div.tab-summary > div.summary_image > a > img",
       (e) => e.src
     )
@@ -31,7 +30,7 @@ export default class KissmangaScraper extends MangaScraper {
   }
 
   protected async extractArtist(): Promise<string> {
-    return this.page!.$eval(
+    return await this.page!.$eval(
       "body > div.wrap > div > div > div > div.profile-manga.summary-layout-1 > div > div > div > div.tab-summary > div.summary_content_wrap > div > div.post-content > div:nth-child(7) > div.summary-content > div > a",
       (e) => e.innerText
     )
@@ -40,7 +39,7 @@ export default class KissmangaScraper extends MangaScraper {
   }
 
   protected async extractStatus(): Promise<string> {
-    return this.page!.$eval(
+    return await this.page!.$eval(
       "body > div.wrap > div > div > div > div.profile-manga.summary-layout-1 > div > div > div > div.tab-summary > div.summary_content_wrap > div > div.post-status > div:nth-child(2) > div.summary-content",
       (e) => e.innerText
     )
@@ -49,7 +48,7 @@ export default class KissmangaScraper extends MangaScraper {
   }
 
   protected async extractDescription(): Promise<string> {
-    return this.page!.$eval(
+    return await this.page!.$eval(
       "body > div.wrap > div > div > div > div.c-page-content.style-1 > div > div > div > div.main-col.col-md-8.col-sm-8 > div > div.c-page > div > div.description-summary > div > p",
       (e) => e.innerText
     )
@@ -89,10 +88,6 @@ export default class KissmangaScraper extends MangaScraper {
     } catch (e) {
       return [];
     }
-  }
-
-  protected formatChapterUrl(mangaName: string, chapter: number): string {
-    return `${this.baseUrl}${this.mangaUrl}${mangaName}\chapter-${chapter}`;
   }
 
   protected async extractMangaList(): Promise<MangaModel[]> {

@@ -5,7 +5,6 @@ import { Browser, Page } from "puppeteer";
 export default abstract class MangaScraper {
   protected abstract baseUrl: string;
   protected abstract mangaUrl: string;
-  protected abstract mangaListUrl: string;
   protected abstract trendingUrl: string;
   protected abstract searchUrl: string;
 
@@ -35,10 +34,9 @@ export default abstract class MangaScraper {
     }
   }
 
-  public async getManga(name: string) {
+  public async getManga(mangaUrl: string) {
     const manga = new MangaModel();
-    // TODO: convert name to url format
-    await this.scrape(`${this.baseUrl}${this.mangaUrl}/${name}`);
+    await this.scrape(mangaUrl);
 
     manga.title = await this.extractTitle();
     manga.imgUrl = await this.extractImgUrl();
@@ -52,15 +50,10 @@ export default abstract class MangaScraper {
     return manga;
   }
 
-  public async getPages(
-    mangaName: string,
-    chapterNumber: number
-  ): Promise<ChapterModel> {
-    const url = this.formatChapterUrl(mangaName, chapterNumber);
-    await this.scrape(url);
+  public async getPages(chapterUrl: string): Promise<ChapterModel> {
+    await this.scrape(chapterUrl);
     const chapter = new ChapterModel();
-    chapter.number = chapterNumber;
-    chapter.url = url;
+    chapter.url = chapterUrl;
     chapter.pages = await this.extractPages();
     return chapter;
   }
@@ -75,11 +68,6 @@ export default abstract class MangaScraper {
     await this.scrape(this.searchUrl + urlFormattedName);
     return await this.extractSearchManga();
   }
-
-  protected abstract formatChapterUrl(
-    mangaName: string,
-    chapter: number
-  ): string;
 
   // details page
   protected abstract extractTitle(): Promise<string>;
