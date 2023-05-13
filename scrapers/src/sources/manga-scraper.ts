@@ -1,6 +1,6 @@
-import ChapterModel from "../models/manga-chapter";
-import MangaModel from "../models/manga";
-import { Browser, Page } from "puppeteer";
+import ChapterModel from '../models/manga-chapter';
+import MangaModel from '../models/manga';
+import { Browser, Page } from 'puppeteer';
 
 export default abstract class MangaScraper {
   protected abstract baseUrl: string;
@@ -82,8 +82,6 @@ export default abstract class MangaScraper {
 
   // browse page
   protected abstract extractMangaList(): Promise<MangaModel[]>;
-  protected abstract extractLatestChapter(): Promise<string>;
-
   // search page
   protected abstract extractSearchManga(): Promise<MangaModel[]>;
 }
