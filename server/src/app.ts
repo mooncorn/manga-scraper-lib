@@ -6,6 +6,7 @@ import { json } from "body-parser";
 import { NotFoundError } from "./errors/not-found-error";
 import { errorHandler } from "./middlewares/error-handler";
 import cookieSession from "cookie-session";
+import cors from "cors";
 
 import { currentUserRouter } from "./routes/auth/current-user";
 import { signinRouter } from "./routes/auth/signin";
@@ -14,11 +15,12 @@ import { signupRouter } from "./routes/auth/signup";
 
 const app = express();
 
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(json());
 app.use(
   cookieSession({
     signed: false,
-    secure: process.env.NODE_ENV !== "test",
+    // secure: process.env.NODE_ENV !== "test",
   })
 );
 
