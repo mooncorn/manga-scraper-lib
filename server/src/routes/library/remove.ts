@@ -32,4 +32,4 @@ router.delete(
   }
 );
 
-export { router as currentUserRouter };
+export { router as removeMangaRouter };

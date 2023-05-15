@@ -34,4 +34,4 @@ router.post(
   }
 );
 
-export { router as currentUserRouter };
+export { router as addMangaRouter };
