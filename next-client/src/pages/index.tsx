@@ -1,6 +1,7 @@
-import { UserModel } from "@/components/AuthForm";
+import { UserModel } from "@/components/auth-form";
 import { NextPage } from "next";
 import Head from "next/head";
+import { useEffect, useState } from "react";
 
 interface HomeProps {
   currentUser?: UserModel;
@@ -12,13 +13,7 @@ const Home = ({ currentUser }: HomeProps) => {
       <Head>
         <title>Explore</title>
       </Head>
-      <main>
-        {currentUser ? (
-          <h1>You are signed in</h1>
-        ) : (
-          <h1>You are not signed in</h1>
-        )}
-      </main>
+      <main></main>
     </>
   );
 };

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import React from "react";
-import { UserModel } from "./AuthForm";
+import { UserModel } from "./auth-form";
 
 interface HeaderProps {
-  currentUser?: UserModel;
+  currentUser: UserModel | null;
 }
 
 const Header = ({ currentUser }: HeaderProps) => {

@@ -1,11 +1,12 @@
 import server from "@/api/server";
-import { UserModel } from "@/components/AuthForm";
-import Header from "@/components/Header";
+import { UserModel } from "@/components/auth-form";
+import Header from "@/components/header";
 import type { AppContext, AppProps } from "next/app";
 import App from "next/app";
+import { useEffect, useState } from "react";
 
-type CustomAppProps = Pick<AppProps, "Component" | "pageProps"> & {
-  currentUser?: UserModel;
+export type CustomAppProps = Pick<AppProps, "Component" | "pageProps"> & {
+  currentUser: UserModel | null;
 };
 
 export default function CustomApp({
@@ -13,6 +14,8 @@ export default function CustomApp({
   pageProps,
   currentUser,
 }: CustomAppProps) {
+  useEffect(() => {}, []);
+
   return (
     <>
       <Header currentUser={currentUser} />
@@ -35,3 +38,10 @@ CustomApp.getInitialProps = async (context: AppContext) => {
     return { pageProps };
   }
 };
+function AdblockerPlugin(): any {
+  throw new Error("Function not implemented.");
+}
+
+function StealthPlugin(): any {
+  throw new Error("Function not implemented.");
+}
