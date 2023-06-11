@@ -3,8 +3,9 @@ import mongoose from "mongoose";
 // An interface that describes the properties
 // that are required to create a new Manga
 interface MangaAttrs {
+  title: string;
+  description: string;
   url: string;
-  userId: string;
   source: string;
 }
 
@@ -17,14 +18,19 @@ interface MangaModel extends mongoose.Model<MangaDocument> {
 // An interface that descirbes the properties
 // that a Manga Document has
 interface MangaDocument extends mongoose.Document {
-  userId: string;
+  title: string;
+  description: string;
   url: string;
   source: string;
 }
 
 const mangaSchema = new mongoose.Schema(
   {
-    userId: {
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
       type: String,
       required: true,
     },
