@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 // that are required to create a new Manga
 interface MangaAttrs {
   title: string;
-  description: string;
+  imgUrl: string;
   url: string;
   source: string;
 }
@@ -19,7 +19,7 @@ interface MangaModel extends mongoose.Model<MangaDocument> {
 // that a Manga Document has
 interface MangaDocument extends mongoose.Document {
   title: string;
-  description: string;
+  imgUrl: string;
   url: string;
   source: string;
 }
@@ -30,7 +30,7 @@ const mangaSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    description: {
+    imgUrl: {
       type: String,
       required: true,
     },

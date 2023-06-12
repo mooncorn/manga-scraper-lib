@@ -1,6 +1,6 @@
 export default class ChapterModel {
-  public number?: number;
+  public title?: string;
   public url?: string;
   public releaseDate?: string;
-  public pages?: string[]
+  public pages?: string[];
 }

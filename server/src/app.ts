@@ -15,6 +15,11 @@ import { signupRouter } from "./routes/auth/signup";
 import { getLibEntryRouter } from "./routes/lib-entry/get";
 import { newLibEntryRouter } from "./routes/lib-entry/new";
 import { deleteLibEntryRouter } from "./routes/lib-entry/delete";
+import { newChapterRouter } from "./routes/chapter/new";
+import { newMangaRouter } from "./routes/manga/new";
+import { getMangaRouter } from "./routes/manga/get";
+import { getChapterRouter } from "./routes/chapter/get";
+import { getAllMangaRouter } from "./routes/manga/getAll";
 
 const app = express();
 
@@ -35,6 +40,13 @@ app.use(signupRouter);
 app.use(getLibEntryRouter);
 app.use(newLibEntryRouter);
 app.use(deleteLibEntryRouter);
+
+app.use(newChapterRouter);
+app.use(getChapterRouter);
+
+app.use(newMangaRouter);
+app.use(getMangaRouter);
+app.use(getAllMangaRouter);
 
 app.all("*", async (req, res, next) => {
   throw new NotFoundError();

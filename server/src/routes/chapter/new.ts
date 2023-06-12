@@ -10,7 +10,6 @@ const router = express.Router();
 
 const validationRules = [
   body("url").isURL().withMessage("Url must be of valid format"),
-  body("number").isNumeric().withMessage("Number field is required"),
   body("title").isString().notEmpty().withMessage("Title field is required"),
   body("manga").isString().notEmpty().withMessage("Manga field is required"),
   body("pages").isArray().withMessage("Pages field is required"),
@@ -21,10 +20,10 @@ router.post(
   "/api/chapter",
   validateRequest(validationRules),
   async (req, res) => {
-    const { url, number, title, manga, pages } = req.body;
+    const { url, title, manga, pages } = req.body;
     const mangaId = new Types.ObjectId(manga);
 
-    const mangaFound = await Manga.findOne({ manga: mangaId });
+    const mangaFound = await Manga.findOne({ _id: mangaId });
     if (!mangaFound) {
       throw new BadRequestError("Manga with this id does not exist");
     }
@@ -36,7 +35,6 @@ router.post(
 
     const chapter = Chapter.build({
       url,
-      number,
       title,
       manga: mangaId,
       pages,

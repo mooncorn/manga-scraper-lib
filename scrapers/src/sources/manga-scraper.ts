@@ -1,6 +1,6 @@
-import ChapterModel from '../models/manga-chapter';
-import MangaModel from '../models/manga';
-import { Browser, Page } from 'puppeteer';
+import ChapterModel from "../models/manga-chapter";
+import MangaModel from "../models/manga";
+import { Browser, Page } from "puppeteer";
 
 export default abstract class MangaScraper {
   protected abstract baseUrl: string;
@@ -11,7 +11,7 @@ export default abstract class MangaScraper {
   abstract readonly name: string;
 
   protected selectorToWait?: string;
-  protected scrapeTimeout: number = 5000;
+  protected scrapeTimeout: number = 15000;
 
   protected page?: Page;
 
@@ -45,7 +45,6 @@ export default abstract class MangaScraper {
     manga.status = await this.extractStatus();
     manga.source = this.name;
     manga.chapters = await this.extractChapters();
-    manga.latestChapter = manga.chapters[0]?.number?.toString();
 
     return manga;
   }

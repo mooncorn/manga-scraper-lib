@@ -10,10 +10,7 @@ const validationRules = [
   body("url").isURL().withMessage("Url must be of valid format"),
   body("source").isString().notEmpty().withMessage("Source field is required"),
   body("title").isString().notEmpty().withMessage("Title field is required"),
-  body("description")
-    .isString()
-    .notEmpty()
-    .withMessage("Description field is required"),
+  body("imgUrl").isURL().withMessage("Image url must be of valid format"),
 ];
 
 //TODO: add auth to scrappers
@@ -21,7 +18,7 @@ router.post(
   "/api/manga",
   validateRequest(validationRules),
   async (req, res) => {
-    const { url, source, title, description } = req.body;
+    const { url, source, title, imgUrl } = req.body;
 
     const found = await Manga.findOne({ url });
     if (found) {
@@ -32,7 +29,7 @@ router.post(
       url,
       title,
       source,
-      description,
+      imgUrl,
     });
     await manga.save();
 

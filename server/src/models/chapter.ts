@@ -3,7 +3,6 @@ import mongoose, { Schema, Types } from "mongoose";
 // An interface that describes the properties
 // that are required to create a new Chapter
 interface ChapterAttrs {
-  number: number;
   title: string;
   url: string;
   manga: Types.ObjectId;
@@ -19,7 +18,6 @@ interface ChapterModel extends mongoose.Model<ChapterDocument> {
 // An interface that descirbes the properties
 // that a Chapter Document has
 interface ChapterDocument extends mongoose.Document {
-  number: number;
   title: string;
   url: string;
   manga: Types.ObjectId;
@@ -30,10 +28,6 @@ const chapterSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true,
-    },
-    number: {
-      type: Number,
       required: true,
     },
     url: {
