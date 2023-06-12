@@ -1,16 +1,44 @@
 import express from "express";
-import { body } from "express-validator";
+import { body, query } from "express-validator";
 import { validateRequest } from "../../middlewares/validate-request";
 import { Manga } from "../../models/manga";
-import { NotFoundError } from "../../errors/not-found-error";
 
 const router = express.Router();
 
-//TODO: add auth to scrappers
-router.get("/api/manga/all", async (req, res) => {
-  const manga = await Manga.find();
+const validationRules = [
+  query("page").isInt().toInt().optional(),
+  query("search").optional(),
+];
 
-  res.status(200).json({ manga });
-});
+//TODO: add auth to scrappers
+router.get(
+  "/api/manga/all",
+  validateRequest(validationRules),
+  async (req, res) => {
+    const { page, search } = req.query;
+    const limit = 40;
+
+    let manga = [];
+
+    if (page) {
+      manga = await Manga.find({ title: { $regex: search, $options: "i" } })
+        .limit(limit * 1)
+        .skip((Number(page) - 1) * limit)
+        .exec();
+
+      const count = await Manga.count();
+
+      res.status(200).json({
+        manga,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page,
+      });
+    } else {
+      manga = await Manga.find();
+
+      res.status(200).json({ manga });
+    }
+  }
+);
 
 export { router as getAllMangaRouter };
