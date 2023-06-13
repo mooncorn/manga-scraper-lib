@@ -42,6 +42,11 @@ const MangaPage = ({ currentUser }: MangaPageProps) => {
         "http://localhost:3001/api/manga/" + router.query.id
       );
       setManga(res.data.manga);
+      res.data.chapters
+        .sort((a: ChapterModel, b: ChapterModel) =>
+          a.title.localeCompare(b.title)
+        )
+        .reverse();
       setChapters(res.data.chapters);
     } catch (e) {
       console.log(e);
