@@ -20,6 +20,8 @@ import { newMangaRouter } from "./routes/manga/new";
 import { getMangaRouter } from "./routes/manga/get";
 import { getChapterRouter } from "./routes/chapter/get";
 import { getAllMangaRouter } from "./routes/manga/getAll";
+import { getIdMangaRouter } from "./routes/manga/getId";
+import { getIdChapterRouter } from "./routes/chapter/getId";
 
 const app = express();
 
@@ -43,10 +45,12 @@ app.use(deleteLibEntryRouter);
 
 app.use(newChapterRouter);
 app.use(getChapterRouter);
+app.use(getIdChapterRouter);
 
 app.use(newMangaRouter);
 app.use(getMangaRouter);
 app.use(getAllMangaRouter);
+app.use(getIdMangaRouter);
 
 app.all("*", async (req, res, next) => {
   throw new NotFoundError();

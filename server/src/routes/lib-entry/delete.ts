@@ -9,9 +9,7 @@ import { Types } from "mongoose";
 
 const router = express.Router();
 
-const validationRules = [
-  body("url").isURL().withMessage("Manga url must be a valid url format"),
-];
+const validationRules = [body("mangaId").isMongoId()];
 
 router.delete(
   "/api/lib-entry",
@@ -19,15 +17,15 @@ router.delete(
   currentUser,
   requireAuth,
   async (req, res) => {
-    const { url } = req.body;
+    const { mangaId } = req.body;
     const user = new Types.ObjectId(req.user!.id);
 
-    const found = await LibEntry.findOne({ url, user });
+    const found = await LibEntry.findOne({ manga: mangaId, user });
     if (!found) {
       throw new BadRequestError("Manga is not in the library");
     }
 
-    await LibEntry.deleteOne({ url, user });
+    await LibEntry.deleteOne({ manga: mangaId, user });
 
     res.status(200).json(found);
   }

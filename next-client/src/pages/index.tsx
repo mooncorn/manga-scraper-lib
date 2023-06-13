@@ -12,7 +12,7 @@ interface HomeProps {
   currentUser?: UserModel;
 }
 
-interface MangaModel {
+export interface MangaModel {
   title: string;
   url: string;
   imgUrl: string;
@@ -35,8 +35,6 @@ const Home = ({ currentUser }: HomeProps) => {
         `http://localhost:3001/api/manga/all?page=${currPage}&search=${debouncedTerm}`
       );
 
-      console.log(response.data.manga);
-
       if (!response.data.manga.length) {
         setWasLastList(true);
         return;
@@ -53,20 +51,26 @@ const Home = ({ currentUser }: HomeProps) => {
 
   const renderMangas = () =>
     mangaList.map((m) => (
-      <div key={m.id} className="m-1" style={{ minWidth: 110, width: 110 }}>
-        <Image
-          src={m.imgUrl}
-          alt="Manga cover"
-          width={110}
-          height={150}
-          className="card-img-top"
-        />
-        <div className="card-body p-0 py-1">
-          <h5 className="card-title m-0" style={{ fontSize: 12 }}>
-            {m.title}
-          </h5>
+      <Link
+        key={m.id}
+        href={{ pathname: `/manga/${m.id}` }}
+        className="text-decoration-none"
+      >
+        <div className="m-1" style={{ minWidth: 110, width: 110 }}>
+          <Image
+            src={m.imgUrl}
+            alt="Manga cover"
+            width={110}
+            height={150}
+            className="card-img-top"
+          />
+          <div className="card-body p-0 py-1">
+            <h5 className="card-title m-0 text-dark" style={{ fontSize: 12 }}>
+              {m.title}
+            </h5>
+          </div>
         </div>
-      </div>
+      </Link>
     ));
 
   const onScroll = () => {
@@ -76,7 +80,7 @@ const Home = ({ currentUser }: HomeProps) => {
       if (scrollTop + clientHeight >= scrollHeight - 2) {
         // This will be triggered after hitting the last element.
         // API call should be made here while implementing pagination.
-        console.log("Next page");
+        // console.log("Next page");
         setCurrPage(currPage + 1);
       }
     }

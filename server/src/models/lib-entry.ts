@@ -3,9 +3,8 @@ import mongoose, { Schema, Types } from "mongoose";
 // An interface that describes the properties
 // that are required to create a new LibEntry
 interface LibEntryAttrs {
-  url: string;
   user: Types.ObjectId;
-  source: string;
+  manga: Types.ObjectId;
 }
 
 // An interface that describes the properties
@@ -17,9 +16,8 @@ interface LibEntryModel extends mongoose.Model<LibEntryDocument> {
 // An interface that descirbes the properties
 // that a LibEntry Document has
 interface LibEntryDocument extends mongoose.Document {
-  userId: string;
   user: Types.ObjectId;
-  source: string;
+  manga: Types.ObjectId;
 }
 
 const libEntrySchema = new mongoose.Schema(
@@ -28,12 +26,8 @@ const libEntrySchema = new mongoose.Schema(
       type: Schema.Types.ObjectId,
       required: true,
     },
-    url: {
-      type: String,
-      required: true,
-    },
-    source: {
-      type: String,
+    manga: {
+      type: Schema.Types.ObjectId,
       required: true,
     },
   },

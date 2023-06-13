@@ -10,8 +10,9 @@ import { requireAuth } from "../../middlewares/require-auth";
 const router = express.Router();
 
 const validationRules = [
-  body("url").isURL().withMessage("Manga url must be a valid url format"),
-  body("source").trim().notEmpty().withMessage("Source is required"),
+  body("mangaId")
+    .isMongoId()
+    .withMessage("Manga url must be a valid url format"),
 ];
 
 router.post(
@@ -20,15 +21,15 @@ router.post(
   currentUser,
   requireAuth,
   async (req, res) => {
-    const { url, source } = req.body;
+    const { mangaId } = req.body;
     const user = new Types.ObjectId(req.user!.id);
 
-    const found = await LibEntry.findOne({ url, user });
+    const found = await LibEntry.findOne({ manga: mangaId, user });
     if (found) {
       throw new BadRequestError("Manga is already in the library");
     }
 
-    const manga = LibEntry.build({ user, url, source });
+    const manga = LibEntry.build({ user, manga: mangaId });
     await manga.save();
 
     res.status(201).json({ manga });
